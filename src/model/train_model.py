@@ -2,9 +2,10 @@
 import os
 import joblib
 import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
 
-# Paths
+# Importas la función get_model() del archivo model_definition.py
+from model_definition import get_model
+
 PROCESSED_DATA_DIR = './data/processed/'
 MODEL_DIR = './models/'
 
@@ -18,11 +19,13 @@ def load_processed_data():
 
 def train_and_save_model(X, y):
     """Entrena el modelo y guarda el modelo entrenado."""
-    model = RandomForestRegressor(random_state=42)
+    # Usamos tu función get_model() para instanciar el modelo
+    model = get_model()
     model.fit(X, y)
 
     os.makedirs(MODEL_DIR, exist_ok=True)
     joblib.dump(model, os.path.join(MODEL_DIR, 'trained_model.pkl'))
+    print("Modelo entrenado y guardado en trained_model.pkl")
 
 def main():
     """Entrena y guarda el modelo."""

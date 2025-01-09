@@ -18,7 +18,9 @@ flask = "^2.3.2"
 flask-bootstrap = "^3.3.7.1"
 matplotlib = "^3.5"
 plotly = "^5.0"
-pytest = "^8.0.0"
+pytest = "^7.4.0"
+pytest-flask = "^1.2.0"  # Agregado para facilitar pruebas de Flask
+werkzeug = "^2.3.0"  # Asegura compatibilidad con Flask
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

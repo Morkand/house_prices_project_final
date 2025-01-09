@@ -4,33 +4,34 @@ FROM python:3.9-slim
 # Configuramos el directorio de trabajo
 WORKDIR /app
 
-# Copiar todos los archivos del proyecto dentro del contenedor
+# Copiar los archivos necesarios del proyecto
 COPY . .
 
 # Crear directorios necesarios dentro del contenedor
 RUN mkdir -p data/processed
 
-# Actualizar y instalar dependencias del sistema necesarias
+# Actualizar e instalar dependencias del sistema necesarias
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Instalar dependencias de Python (actualización de pip, setuptools y wheel)
-RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+# Establecer el PYTHONPATH para que el módulo src esté disponible
+#ENV PYTHONPATH="/app/src:$PYTHONPATH"
 
-# Instalar Poetry y pytest para la gestión de dependencias y pruebas
-RUN pip install poetry pytest
+# Instalar dependencias de Python
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel poetry pytest
 
 # Instalar las dependencias del proyecto utilizando Poetry
 RUN poetry install --no-root
-
-# Ejecutar las pruebas para verificar el pipeline
-RUN poetry run pytest src/tests/test_pipeline.py
 
 # Ejecutar el preprocesamiento, entrenamiento e inferencia como parte del pipeline
 RUN poetry run python src/data/data_preprocessing.py
 RUN poetry run python src/model/train_model.py
 RUN poetry run python src/model/inference.py
+
+# Ejecutar las pruebas para verificar el pipeline
+ENV PYTHONUNBUFFERED=1
+RUN poetry run pytest -s src/tests
 
 # Exponer el puerto 5200 para Flask
 EXPOSE 5200

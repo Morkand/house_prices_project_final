@@ -78,8 +78,8 @@ def index():
 def predict():
     """
     Permite cargar un archivo CSV/Excel para realizar predicciones.
-    Si el archivo incluye 'SalePrice', genera un archivo para análisis.
-    Si no, genera un archivo con predicciones descargable.
+    Genera un archivo descargable y, si el archivo incluye 'SalePrice',
+    habilita un enlace para ir al análisis.
     """
     if request.method == 'POST':
         # Verificar si se subió un archivo
@@ -134,15 +134,30 @@ def predict():
         uploaded_data['Predicted'] = predictions
         uploaded_data.to_csv(output_filepath, index=False)
 
+        # Si incluye 'SalePrice', almacenar el archivo en la sesión para análisis
         if has_sale_price:
-            # Redirigir a análisis
             session['analysis_file'] = unique_filename
-            return redirect(url_for('analysis'))
-        else:
-            # Generar archivo descargable
-            return send_file(output_filepath, as_attachment=True)
+
+        # Renderizar la página de predicción con enlace a descarga y análisis
+        return render_template(
+            'predict.html',
+            success=True,
+            download_url=url_for('download_predictions', filename=unique_filename),
+            analysis_available=has_sale_price
+        )
 
     return render_template('predict.html')
+
+
+@app.route('/download_predictions/<filename>', methods=['GET'])
+def download_predictions(filename):
+    """
+    Permite descargar el archivo de predicciones generado.
+    """
+    filepath = os.path.join(app.config['PROCESSED_FOLDER'], filename)
+    if not os.path.exists(filepath):
+        return "ERROR: No se encontró el archivo de predicciones.", 404
+    return send_file(filepath, as_attachment=True)
 
 
 @app.route('/analysis', methods=['GET'])
