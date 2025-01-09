@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Análisis de Datos</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-4">Análisis de Datos</h1>
+
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <h3 class="card-title">Gráfico: Predicciones</h3>
+          <div class="card-text">{{ actual_vs_predicted | safe }}</div>
+        </div>
+      </div>
+
+      {% if comparison_graph %}
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <h3 class="card-title">
+            Gráfico: Comparación Predicciones vs. Reales
+          </h3>
+          <div class="card-text">{{ comparison_graph | safe }}</div>
+          <hr />
+          <p><strong>RMSE:</strong> {{ rmse }}</p>
+          <p><strong>R²:</strong> {{ r2 }}</p>
+        </div>
+      </div>
+      {% else %}
+      <div class="alert alert-warning text-center">
+        <p>
+          No se encontraron datos reales (<code>SalePrice</code>) en el archivo
+          para calcular métricas.
+        </p>
+      </div>
+      {% endif %}
+
+      <div class="text-center">
+        <a href="/" class="btn btn-secondary">Volver al Inicio</a>
+      </div>
+    </div>
+
+    <footer class="text-center mt-5">
+      <p class="text-muted">&copy; 2025 Proyecto de Precios de Casas</p>
+    </footer>
+  </body>
+</html>
