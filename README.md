@@ -122,12 +122,6 @@ pytest src/tests
 
 ---
 
-## **Contribuciones**
-
-Se aceptan contribuciones al proyecto. Por favor, crea un **issue** o envía un **pull request** con tu propuesta.
-
----
-
 ## **Licencia**
 
 Este proyecto está licenciado bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.

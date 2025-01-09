@@ -12,5 +12,5 @@ def test_model_performance(model_and_preprocessor):
     predictions = model.predict(X_test_transformed)
 
     mae = mean_absolute_error(test_labels, predictions)
-    max_allowed_mae = 30000  # Ajusta este umbral según tu caso
+    max_allowed_mae = 30000
     assert mae < max_allowed_mae, f"El MAE ({mae}) excede el umbral permitido ({max_allowed_mae})."
