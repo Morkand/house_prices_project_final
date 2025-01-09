@@ -13,6 +13,7 @@
     <div class="container mt-5">
       <h1 class="text-center mb-4">Análisis de Datos</h1>
 
+      <!-- Gráfico de Predicciones (ID vs. Predicted) -->
       <div class="card shadow mb-4">
         <div class="card-body">
           <h3 class="card-title">Gráfico: Predicciones</h3>
@@ -21,6 +22,7 @@
       </div>
 
       {% if comparison_graph %}
+      <!-- Gráfico de Comparación Real vs. Predicho -->
       <div class="card shadow mb-4">
         <div class="card-body">
           <h3 class="card-title">
@@ -28,11 +30,36 @@
           </h3>
           <div class="card-text">{{ comparison_graph | safe }}</div>
           <hr />
-          <p><strong>RMSE:</strong> {{ rmse }}</p>
-          <p><strong>R²:</strong> {{ r2 }}</p>
+          <h5>Métricas de Evaluación</h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>RMSE:</strong> {{ rmse|round(3) }}
+            </li>
+            <li class="list-group-item">
+              <strong>R²:</strong> {{ r2|round(4) }}
+            </li>
+            {% if mae is defined and mae is not none %}
+            <li class="list-group-item">
+              <strong>MAE:</strong> {{ mae|round(3) }}
+            </li>
+            {% endif %} {% if mape is defined and mape is not none %}
+            <li class="list-group-item">
+              <strong>MAPE:</strong> {{ (mape * 100)|round(2) }} %
+            </li>
+            {% endif %}
+          </ul>
         </div>
       </div>
-      {% else %}
+
+      <!-- Histograma de Errores -->
+      {% if error_hist %}
+      <div class="card shadow mb-4">
+        <div class="card-body">
+          <h3 class="card-title">Histograma de Errores</h3>
+          <div class="card-text">{{ error_hist | safe }}</div>
+        </div>
+      </div>
+      {% endif %} {% else %}
       <div class="alert alert-warning text-center">
         <p>
           No se encontraron datos reales (<code>SalePrice</code>) en el archivo

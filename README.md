@@ -1,67 +1,133 @@
+# Proyecto de Regresión de Precios de Casas
 
-# House Prices Regression Project
+Este proyecto predice los precios de casas utilizando el conjunto de datos **Ames Housing**. El pipeline incluye preprocesamiento de datos, entrenamiento del modelo e inferencia para generar predicciones.
 
-This project predicts house prices using the Ames Housing dataset. The pipeline includes data preprocessing, model training, and inference.
+---
 
-## Project Structure
+## **Estructura del Proyecto**
+
 ```
 project_name/
 │
 ├── data/
-│   ├── raw/               # Original dataset files
-│   ├── processed/         # Processed dataset files
+│   ├── raw/               # Archivos originales del dataset
+│   ├── processed/         # Archivos procesados del dataset
 │
-├── models/                # Trained models
+├── models/                # Modelos entrenados
 │
-├── src/                   # Source code
-│   ├── data/              # Data preprocessing scripts
-│   ├── model/             # Model definition, training, and inference scripts
+├── src/                   # Código fuente
+│   ├── data/              # Scripts de preprocesamiento de datos
+│   ├── model/             # Definición, entrenamiento e inferencia del modelo
+│   ├── tests/             # Pruebas unitarias
 │
-├── pyproject.toml         # Poetry dependencies
-├── .gitignore             # Git ignore file
-├── README.md              # Project documentation
+├── pyproject.toml         # Dependencias gestionadas con Poetry
+├── .gitignore             # Archivos ignorados por Git
+├── README.md              # Documentación del proyecto
 ```
 
-## Getting Started
+---
 
-### Prerequisites
-- Python 3.9 or higher
-- Poetry (for dependency management)
+## **Comenzando**
 
-### Installation
-1. Clone this repository.
-2. Navigate to the project directory.
-3. Install dependencies using Poetry:
+### **Requisitos Previos**
+
+- Python 3.9 o superior.
+- Poetry (para la gestión de dependencias).
+- Docker (opcional, para contenedores).
+
+### **Instalación**
+
+1. Clona este repositorio:
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   ```
+2. Accede al directorio del proyecto:
+   ```bash
+   cd project_name
+   ```
+3. Instala las dependencias usando Poetry:
    ```bash
    poetry install
    ```
 
-### Usage
+---
 
-#### 1. Preprocess Data
-Run the data preprocessing script to clean and prepare the data:
+## **Uso**
+
+### **1. Preprocesar Datos**
+
+Limpia y prepara los datos para el entrenamiento y la inferencia:
+
 ```bash
 python src/data/data_preprocessing.py
 ```
 
-#### 2. Train Model
-Train the regression model using preprocessed data:
+### **2. Entrenar el Modelo**
+
+Entrena el modelo de regresión utilizando los datos preprocesados:
+
 ```bash
 python src/model/train_model.py
 ```
 
-#### 3. Make Predictions
-Use the trained model to make predictions on test data:
+### **3. Generar Predicciones**
+
+Usa el modelo entrenado para realizar predicciones sobre los datos de prueba:
+
 ```bash
 python src/model/inference.py
 ```
 
-### Docker (Optional)
-Build and run the project in a Docker container:
+### **4. Pruebas**
+
+Ejecuta las pruebas unitarias del pipeline:
+
 ```bash
-docker build -t house-prices-project .
-docker run -p 8000:8000 house-prices-project
+pytest src/tests
 ```
 
-### License
-This project is licensed under the MIT License.
+---
+
+## **Uso con Docker (Opcional)**
+
+Puedes ejecutar el proyecto en un contenedor Docker para facilitar su implementación:
+
+1. Construye la imagen del contenedor:
+   ```bash
+   docker build -t house-prices-project .
+   ```
+2. Ejecuta el contenedor:
+   ```bash
+   docker run -p 5200:5200 house-prices-project
+   ```
+
+Esto ejecutará la aplicación Flask en el puerto `5200`.
+
+---
+
+## **Pruebas Unitarias**
+
+Este proyecto incluye pruebas unitarias para asegurar la calidad del pipeline:
+
+- **Preprocesamiento de datos:** Validación de la limpieza y transformación de los datos.
+- **Entrenamiento del modelo:** Verificación de la correcta ejecución del entrenamiento.
+- **Inferencia:** Validación del formato y contenido de las predicciones generadas.
+- **Integración con Docker:** Ejecución de pruebas dentro del contenedor.
+
+Ejecuta las pruebas con:
+
+```bash
+pytest src/tests
+```
+
+---
+
+## **Contribuciones**
+
+Se aceptan contribuciones al proyecto. Por favor, crea un **issue** o envía un **pull request** con tu propuesta.
+
+---
+
+## **Licencia**
+
+Este proyecto está licenciado bajo la licencia MIT. Consulta el archivo `LICENSE` para más detalles.
