@@ -39,7 +39,7 @@ project_name/
 
 1. Clona este repositorio:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/Morkand/house_prices_project_final
    ```
 2. Accede al directorio del proyecto:
    ```bash
